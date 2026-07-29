@@ -3,86 +3,186 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resume Assistant - Saket Saurabh</title>
-    <meta name="description" content="AI-powered Resume Assistant for Saket Saurabh. Ask questions about skills, projects, and experience.">
+    <title>Saket Saurabh - AI Portfolio Assistant</title>
+    <meta name="description" content="Interactive AI Portfolio & Resume Assistant for Saket Saurabh, powered by RAG and HuggingFace Qwen-2.5 32B.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <!-- Marked.js for fast markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
     <div class="app-container">
-        <!-- Sidebar -->
-        <aside class="sidebar">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
-                <div class="logo">
-                    <span class="logo-icon">🤖</span>
-                    <span class="logo-text">RAG Assistant</span>
-                </div>
-            </div>
-            <div class="sidebar-content">
-                <h3 class="sidebar-label">Quick Questions</h3>
-                <div class="quick-questions">
-                    <button class="quick-btn" onclick="askQuestion('What are Saket\'s main technical skills?')">💡 Technical Skills</button>
-                    <button class="quick-btn" onclick="askQuestion('Tell me about the Signboard Recognition project')">🔍 Signboard Project</button>
-                    <button class="quick-btn" onclick="askQuestion('What certifications does Saket have?')">📜 Certifications</button>
-                    <button class="quick-btn" onclick="askQuestion('Describe the Football Analytics project')">⚽ Football Analytics</button>
-                    <button class="quick-btn" onclick="askQuestion('What is Saket\'s education background?')">🎓 Education</button>
-                    <button class="quick-btn" onclick="askQuestion('What frameworks does Saket use?')">🛠️ Frameworks</button>
-                    <button class="quick-btn" onclick="askQuestion('Tell me about the Currency Detection project')">💰 Currency Detection</button>
-                </div>
-            </div>
-            <div class="sidebar-footer">
-                <div class="api-key-section">
-                    <label for="apiKey">🔑 HuggingFace API Key</label>
-                    <input type="password" id="apiKey" placeholder="hf_xxxxxxxx..." />
-                    <button class="save-key-btn" onclick="saveApiKey()">Save Key</button>
-                </div>
-                <p class="footer-note">Powered by RAG + HuggingFace</p>
-            </div>
-        </aside>
-
-        <!-- Main Chat Area -->
-        <main class="chat-area">
-            <div class="chat-header">
-                <div class="chat-header-info">
-                    <h1>📄 Resume Assistant</h1>
-                    <p>Ask me anything about Saket Saurabh's skills, projects & experience</p>
-                </div>
-                <div class="status-indicator" id="statusIndicator">
-                    <span class="status-dot"></span>
-                    <span class="status-text">Ready</span>
-                </div>
-            </div>
-
-            <div class="chat-messages" id="chatMessages">
-                <div class="welcome-message">
-                    <div class="welcome-icon">👋</div>
-                    <h2>Welcome to the Resume Assistant!</h2>
-                    <p>I'm an AI-powered chatbot that can answer questions about <strong>Saket Saurabh's</strong> resume using Retrieval-Augmented Generation (RAG).</p>
-                    <p class="welcome-hint">Try asking about skills, projects, certifications, or education.</p>
-                    <div class="welcome-chips">
-                        <button class="chip" onclick="askQuestion('Give me a summary of Saket\'s profile')">📋 Profile Summary</button>
-                        <button class="chip" onclick="askQuestion('What projects has Saket worked on?')">🚀 Projects</button>
-                        <button class="chip" onclick="askQuestion('What are Saket\'s key achievements?')">🏆 Achievements</button>
+                <div class="profile-card">
+                    <div class="profile-avatar">SS</div>
+                    <div class="profile-info">
+                        <h2 class="profile-name">Saket Saurabh</h2>
+                        <p class="profile-role">ML & CV Developer</p>
                     </div>
                 </div>
             </div>
 
-            <div class="chat-input-area">
-                <div class="input-wrapper">
-                    <textarea id="userInput" placeholder="Ask a question about Saket's resume..." rows="1" onkeydown="handleKeyDown(event)"></textarea>
-                    <button class="send-btn" id="sendBtn" onclick="sendMessage()">
+            <div class="sidebar-section">
+                <h3 class="section-title">Quick Navigation</h3>
+                <nav class="nav-questions">
+                    <button class="nav-btn" onclick="askQuestion('What are Saket\'s main technical skills and frameworks?')">
+                        <span class="nav-icon">⚡</span>
+                        <span class="nav-text">Technical Skills</span>
+                    </button>
+                    <button class="nav-btn" onclick="askQuestion('Explain the Signboard Recognition System project in detail')">
+                        <span class="nav-icon">👁️</span>
+                        <span class="nav-text">Signboard Recognition</span>
+                    </button>
+                    <button class="nav-btn" onclick="askQuestion('How does the Football Analytics & Player Tracking framework work?')">
+                        <span class="nav-icon">⚽</span>
+                        <span class="nav-text">Football Analytics</span>
+                    </button>
+                    <button class="nav-btn" onclick="askQuestion('Give specific details on the Currency Detection project')">
+                        <span class="nav-icon">💵</span>
+                        <span class="nav-text">Currency Detection</span>
+                    </button>
+                    <button class="nav-btn" onclick="askQuestion('What certifications does Saket hold?')">
+                        <span class="nav-icon">📜</span>
+                        <span class="nav-text">Certifications</span>
+                    </button>
+                    <button class="nav-btn" onclick="askQuestion('What is Saket\'s educational background?')">
+                        <span class="nav-icon">🎓</span>
+                        <span class="nav-text">Education</span>
+                    </button>
+                </nav>
+            </div>
+
+            <div class="sidebar-footer">
+                <button class="sidebar-action-btn" onclick="toggleKeyModal(true)">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 2l-2 2m-2-2l2 2m7 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        <path d="M15 9l-6 6m0-6l6 6"></path>
+                    </svg>
+                    <span>API Settings</span>
+                </button>
+                <button class="sidebar-action-btn secondary" onclick="clearChat()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                    </svg>
+                    <span>Clear Chat</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Chat Content -->
+        <main class="chat-area">
+            <!-- Top Navbar -->
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="mobile-toggle" onclick="document.getElementById('sidebar').classList.toggle('active')">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M22 2L11 13"></path>
-                            <path d="M22 2L15 22L11 13L2 9L22 2Z"></path>
+                            <line x1="3" y1="12" x2="21" y2="12"></line>
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <line x1="3" y1="18" x2="21" y2="18"></line>
+                        </svg>
+                    </button>
+                    <div class="header-title">
+                        <h1>Resume RAG Assistant</h1>
+                        <p class="header-subtitle">Interactive Query Engine for Saket Saurabh</p>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <div class="api-status-badge" id="apiBadge">
+                        <span class="status-dot green"></span>
+                        <span class="status-label">Qwen-2.5 32B Active</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Chat Messages Log -->
+            <div class="chat-messages" id="chatMessages">
+                <div class="welcome-message">
+                    <div class="welcome-badge">
+                        <span class="badge-dot"></span>
+                        <span class="badge-text">Interactive RAG Engine Active</span>
+                    </div>
+                    <h1 class="welcome-title">Saket Saurabh</h1>
+                    <p class="welcome-subtitle">Machine Learning, Computer Vision & RAG Systems Developer</p>
+                    <p class="welcome-desc">Ask specific questions regarding Saket's engineering background, deep learning models, project architectures, tech stack, and impact metrics.</p>
+                    
+                    <div class="quick-chips-grid">
+                        <button class="chip-card" onclick="askQuestion('What are Saket\'s main technical skills and frameworks?')">
+                            <span class="chip-icon">⚡</span>
+                            <div class="chip-info">
+                                <span class="chip-title">Technical Stack</span>
+                                <span class="chip-sub">Python, PyTorch, YOLO, RAG</span>
+                            </div>
+                        </button>
+                        <button class="chip-card" onclick="askQuestion('Explain the Signboard Recognition System project in detail')">
+                            <span class="chip-icon">👁️</span>
+                            <div class="chip-info">
+                                <span class="chip-title">Signboard Recognition</span>
+                                <span class="chip-sub">Real-time CV & OCR (30+ FPS)</span>
+                            </div>
+                        </button>
+                        <button class="chip-card" onclick="askQuestion('How does the Football Analytics & Player Tracking framework work?')">
+                            <span class="chip-icon">⚽</span>
+                            <div class="chip-info">
+                                <span class="chip-title">Football Analytics</span>
+                                <span class="chip-sub">DeepSORT, Homography, MOT</span>
+                            </div>
+                        </button>
+                        <button class="chip-card" onclick="askQuestion('Give specific details on the Currency Detection project')">
+                            <span class="chip-icon">💵</span>
+                            <div class="chip-info">
+                                <span class="chip-title">Currency Classification</span>
+                                <span class="chip-sub">TensorFlow, ResNet, 98.2% Acc</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Input Controls -->
+            <div class="chat-input-container">
+                <div class="input-card">
+                    <textarea id="userInput" placeholder="Ask a question about Saket's skills, projects, or experience..." rows="1" onkeydown="handleKeyDown(event)"></textarea>
+                    <button class="send-button" id="sendBtn" onclick="sendMessage()" aria-label="Send query">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
                         </svg>
                     </button>
                 </div>
-                <p class="input-disclaimer">This assistant uses RAG to answer from resume context only.</p>
+                <div class="input-footer">
+                    <span class="footer-hint">Press <strong>Enter</strong> to send &bull; <strong>Shift + Enter</strong> for new line</span>
+                    <span class="footer-model">Powered by RAG & Hugging Face Qwen-2.5</span>
+                </div>
             </div>
         </main>
     </div>
+
+    <!-- API Key Settings Modal -->
+    <div class="modal-overlay" id="keyModal" onclick="if(event.target===this) toggleKeyModal(false)">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h2>HuggingFace API Key Settings</h2>
+                <button class="close-modal-btn" onclick="toggleKeyModal(false)">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-desc">Configure your custom HuggingFace Inference API token for high-priority model queries.</p>
+                <div class="form-group">
+                    <label for="apiKey">HuggingFace API Token</label>
+                    <input type="password" id="apiKey" placeholder="hf_xxxxxxxxxxxxxxxxxxxxxxxx" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn secondary" onclick="toggleKeyModal(false)">Cancel</button>
+                <button class="modal-btn primary" onclick="saveApiKey()">Save API Key</button>
+            </div>
+        </div>
+    </div>
+
     <script src="resume_data.js"></script>
     <script src="app.js"></script>
 </body>
