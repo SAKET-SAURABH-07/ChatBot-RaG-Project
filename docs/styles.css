@@ -52,6 +52,18 @@ html, body {
     -webkit-font-smoothing: antialiased;
 }
 
+/* Explicit Reset for Buttons & Inputs so standard browser appearance is removed */
+button, input, textarea {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: none;
+    outline: none;
+    background: none;
+    font-family: inherit;
+    color: inherit;
+}
+
 .app-container {
     display: flex;
     height: 100vh;
